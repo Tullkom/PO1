@@ -13,23 +13,22 @@ plt.plot(x, y, label='y = sin(sqrt(2x))')
 plt.title('График функции y = sin(sqrt(2x))')
 plt.xlabel('x')
 plt.ylabel('y')
+plt.grid(True, color='black', alpha=0.25)
 plt.show()
 
 # 3
 plt.figure(figsize=(8, 6))
 plt.scatter(x, y, marker='o', c=[(0.1, 0.1, 0.2)])
-
 plt.title('Точечный график функции y = sin(sqrt(2x))')
 plt.xlabel('x')
 plt.ylabel('y')
-
 plt.grid(True, color='black', alpha=0.25)
 plt.show()
 
 # 4
 np.random.seed(0)
 numbers1 = np.random.randint(0, 11, 100)
-numbers2 = np.random.normal(5, 5/3, 100).astype(int)
+numbers2 = np.clip(np.random.normal(5, 5/3, 100), 0, 10).astype(int)
 
 plt.figure(figsize=(8, 6))
 plt.hist(numbers1, bins=10, color='blue')
@@ -66,8 +65,8 @@ def func(vars):
     return (x1 + 3)**3 + (x2 - 3)**2
 
 resolution = 100
-x_range = np.linspace(-5, 5, resolution)
-y_range = np.linspace(-5, 5, resolution)
+x_range = np.linspace(0, 10, resolution)
+y_range = np.linspace(0, 10, resolution)
 X, Y = np.meshgrid(x_range, y_range)
 
 Z = np.zeros_like(X)
@@ -77,7 +76,7 @@ for i in range(resolution):
 
 fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(projection='3d')
-surf = ax.plot_surface(X, Y, Z, alpha=0.5, color='blue')
+ax.plot_surface(X, Y, Z, alpha=0.5, color='blue')
 
 ax.set_title('3D график функции z = (x+3)^3 + (y-3)^2')
 ax.set_xlabel('x')
@@ -86,7 +85,7 @@ ax.set_zlabel('z')
 plt.show()
 
 # 7
-def grid_of_plots():
+def grid_plots():
     fig = plt.figure(figsize=(16, 12))
     
     fig.suptitle('Сетка графиков')
@@ -96,6 +95,7 @@ def grid_of_plots():
     ax1.set_title('2. График функции y=sin(sqrt(2x))')
     ax1.set_xlabel('x')
     ax1.set_ylabel('y')
+    ax1.grid(True, color='black', alpha=0.25)
     
     ax2 = fig.add_subplot(2, 2, 2)
     ax2.scatter(x, y, marker='o', c=[(0.1, 0.1, 0.2)])
@@ -103,7 +103,6 @@ def grid_of_plots():
     ax2.set_facecolor('yellow')
     ax2.set_xlabel('x')
     ax2.set_ylabel('y')
-    ax2.legend()
     ax2.grid(True, color='black', alpha=0.25)
     
     ax3 = fig.add_subplot(2, 2, 3)
@@ -111,8 +110,8 @@ def grid_of_plots():
     ax3.set_title('5. Круговая диаграмма')
     
     ax4 = fig.add_subplot(2, 2, 4, projection='3d')
-    surf = ax4.plot_surface(X, Y, Z, alpha=0.5, color='blue')
-    ax4.set_title('6. 3D график функции z = (x+3)^3 + (y-3)^3')
+    ax4.plot_surface(X, Y, Z, alpha=0.5, color='blue')
+    ax4.set_title('6. 3D график функции z = (x+3)^3 + (y-3)^2')
     ax4.set_xlabel('x')
     ax4.set_ylabel('y')
     ax4.set_zlabel('z')
@@ -123,5 +122,5 @@ styles = ['default', 'bmh', 'Solarize_Light2', 'ggplot']
 
 for style in styles:
     with plt.style.context(style):
-        fig = grid_of_plots()
+        fig = grid_plots()
         plt.show()
